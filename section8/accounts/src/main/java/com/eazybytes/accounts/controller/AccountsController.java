@@ -42,12 +42,7 @@ public class AccountsController {
 	@PostMapping("/myAccount")
 	public Accounts getAccountDetails(@RequestBody Customer customer) {
 
-		Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
-		if (accounts != null) {
-			return accounts;
-		} else {
-			return null;
-		}
+		return accountsRepository.findByCustomerId(customer.getCustomerId());
 
 	}
 	
@@ -56,8 +51,7 @@ public class AccountsController {
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		Properties properties = new Properties(accountsConfig.getMsg(), accountsConfig.getBuildVersion(),
 				accountsConfig.getMailDetails(), accountsConfig.getActiveBranches());
-		String jsonStr = ow.writeValueAsString(properties);
-		return jsonStr;
+		return ow.writeValueAsString(properties);
 	}
 	
 	@PostMapping("/myCustomerDetails")
