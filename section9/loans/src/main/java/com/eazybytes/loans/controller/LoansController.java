@@ -37,12 +37,7 @@ public class LoansController {
 	@PostMapping("/myLoans")
 	public List<Loans> getLoansDetails(@RequestBody Customer customer) {
 		System.out.println("Invoking Loans Microservice");
-		List<Loans> loans = loansRepository.findByCustomerIdOrderByStartDtDesc(customer.getCustomerId());
-		if (loans != null) {
-			return loans;
-		} else {
-			return null;
-		}
+		return loansRepository.findByCustomerIdOrderByStartDtDesc(customer.getCustomerId());
 
 	}
 	
@@ -51,8 +46,7 @@ public class LoansController {
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		Properties properties = new Properties(loansConfig.getMsg(), loansConfig.getBuildVersion(),
 				loansConfig.getMailDetails(), loansConfig.getActiveBranches());
-		String jsonStr = ow.writeValueAsString(properties);
-		return jsonStr;
+		return ow.writeValueAsString(properties);
 	}
 
 }
